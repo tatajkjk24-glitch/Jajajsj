@@ -1,1 +1,602 @@
+Local CoreGui = game:GetService("CoreGui")
+local TweenService = game:GetService("TweenService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local Lighting = game:GetService("Lighting")
+local VirtualUser = game:GetService("VirtualUser")
+local RunService = game:GetService("RunService")
 
+-- =========================================================
+-- 1. شاشة الترحيب (Intro)
+-- =========================================================
+local IntroGui = Instance.new("ScreenGui")
+IntroGui.Name = "Swad_Intro"
+IntroGui.ResetOnSpawn = false
+IntroGui.DisplayOrder = 999999
+
+if gethui then
+    IntroGui.Parent = gethui()
+elseif syn and syn.protect_gui then
+    syn.protect_gui(IntroGui)
+    IntroGui.Parent = CoreGui
+else
+    IntroGui.Parent = CoreGui
+end
+
+local MainFrame = Instance.new("Frame")
+MainFrame.Size = UDim2.new(1, 0, 1, 0)
+MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
+MainFrame.BackgroundTransparency = 1
+MainFrame.Parent = IntroGui
+
+local Container = Instance.new("Frame")
+Container.Size = UDim2.new(0, 350, 0, 140)
+Container.Position = UDim2.new(0.5, -175, 0.5, -70)
+Container.BackgroundTransparency = 1
+Container.Parent = MainFrame
+
+local Text96 = Instance.new("TextLabel")
+Text96.Size = UDim2.new(1, 0, 0, 40)
+Text96.Position = UDim2.new(0, 0, 0, 10)
+Text96.BackgroundTransparency = 1
+Text96.Text = "سواد HUB"
+Text96.TextColor3 = Color3.fromRGB(180, 50, 50)
+Text96.TextSize = 28
+Text96.Font = Enum.Font.FredokaOne
+Text96.TextTransparency = 1
+Text96.Parent = Container
+
+local LoadingText = Instance.new("TextLabel")
+LoadingText.Size = UDim2.new(1, 0, 0, 40)
+LoadingText.Position = UDim2.new(0, 0, 0, 60)
+LoadingText.BackgroundTransparency = 1
+LoadingText.Text = "جاري تحميل واجهة المطور سواد..."
+LoadingText.TextColor3 = Color3.fromRGB(255, 255, 255)
+LoadingText.TextSize = 20
+LoadingText.Font = Enum.Font.GothamBold
+LoadingText.TextTransparency = 1
+LoadingText.Parent = Container
+
+task.spawn(function()
+    local tweenInfo = TweenInfo.new(0.6, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+    TweenService:Create(MainFrame, tweenInfo, {BackgroundTransparency = 0.2}):Play()
+    TweenService:Create(Text96, tweenInfo, {TextTransparency = 0}):Play()
+    TweenService:Create(LoadingText, tweenInfo, {TextTransparency = 0}):Play()
+
+    task.wait(2)
+
+    local fadeOut = TweenService:Create(MainFrame, tweenInfo, {BackgroundTransparency = 1})
+    TweenService:Create(Text96, tweenInfo, {TextTransparency = 1}):Play()
+    TweenService:Create(LoadingText, tweenInfo, {TextTransparency = 1}):Play()
+    fadeOut:Play()
+    fadeOut.Completed:Connect(function()
+        IntroGui:Destroy()
+    end)
+end)
+
+-- =========================================================
+-- 2. تحميل مكتبة الواجهة وإنشاء النافذة
+-- =========================================================
+local Libary = loadstring(game:HttpGet("https://pastefy.app/TmYkexTc/raw"))()
+
+local Window = Libary:MakeWindow({
+    Title = "سواد Hub",
+    SubTitle = "by المطور سواد",
+    LoadText = "Swad Hub Loading...",
+    Flags = "SwadHub_UI"
+})
+
+Window:AddMinimizeButton({
+    Button = { Image = "rbxassetid://121151669301975", BackgroundTransparency = 0 },
+    Corner = { CornerRadius = UDim.new(35, 1) },
+})
+
+-- =========================================================
+-- 3. أقسام الواجهة
+-- =========================================================
+
+-- [التاب 1]: الحقوق والمعلومات
+local InfoTab = Window:MakeTab({"الحقوق والمعلومات", "info"})
+InfoTab:AddSection({"معلومات الواجهة"})
+InfoTab:AddParagraph({"اسم السكربت: سواد Hub", ""})
+InfoTab:AddParagraph({"المطور والحقوق: تم إنشاء هذا السكربت عن طريق المطور سواد", ""})
+
+-- [التاب 2]: المقربين للمطور
+local VIPTab = Window:MakeTab({"للمقربين لمطور", "heart"})
+VIPTab:AddSection({"أعضاء قائمة المقربين"})
+
+VIPTab:AddButton({
+    Name = "هادي",
+    Callback = function()
+        -- يمكنك إضافة كود خاص بهادي هنا مستقبلاً
+    end
+})
+
+VIPTab:AddButton({
+    Name = "اسد",
+    Callback = function()
+        -- يمكنك إضافة كود خاص بأسد هنا مستقبلاً
+    end
+})
+
+VIPTab:AddButton({
+    Name = "تايسون",
+    Callback = function()
+        -- يمكنك إضافة كود خاص بتايسون هنا مستقبلاً
+    end
+})
+
+VIPTab:AddButton({
+    Name = "اكان",
+    Callback = function()
+        -- يمكنك إضافة كود خاص بأكان هنا مستقبلاً
+    end
+})
+
+VIPTab:AddButton({
+    Name = "ايتاشي",
+    Callback = function()
+        -- يمكنك إضافة كود خاص بايتاشي هنا مستقبلاً
+    end
+})
+
+VIPTab:AddButton({
+    Name = "خنجر",
+    Callback = function()
+        -- يمكنك إضافة كود خاص بخنجر هنا مستقبلاً
+    end
+})
+
+VIPTab:AddButton({
+    Name = "ابو حسين",
+    Callback = function()
+        -- يمكنك إضافة كود خاص بأبو حسين هنا مستقبلاً
+    end
+})
+
+VIPTab:AddButton({
+    Name = "ميمو",
+    Callback = function()
+        -- يمكنك إضافة كود خاص بميمو هنا مستقبلاً
+    end
+})
+
+-- [التاب 3]: اللاعب (Player)
+local PlayerTab = Window:MakeTab({"اللاعب", "user"})
+PlayerTab:AddSection({"قدرات الشخصية"})
+
+PlayerTab:AddSlider({
+    Name = "سرعة المشي (WalkSpeed)",
+    Min = 16,
+    Max = 300,
+    Default = 16,
+    Callback = function(Value)
+        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
+            LocalPlayer.Character.Humanoid.WalkSpeed = Value
+        end
+    end
+})
+
+PlayerTab:AddSlider({
+    Name = "قوة القفز (JumpPower)",
+    Min = 50,
+    Max = 400,
+    Default = 50,
+    Callback = function(Value)
+        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
+            LocalPlayer.Character.Humanoid.UseJumpPower = true
+            LocalPlayer.Character.Humanoid.JumpPower = Value
+        end
+    end
+})
+
+local noclipConnection
+PlayerTab:AddToggle({
+    Name = "تخطي الجدران (Noclip)",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            noclipConnection = RunService.Stepped:Connect(function()
+                if LocalPlayer.Character then
+                    for _, part in pairs(LocalPlayer.Character:GetDescendants()) do
+                        if part:IsA("BasePart") and part.CanCollide then
+                            part.CanCollide = false
+                        end
+                    end
+                end
+            end)
+        else
+            if noclipConnection then
+                noclipConnection:Disconnect()
+                noclipConnection = nil
+            end
+        end
+    end
+})
+
+-- [التاب 4]: السيرفر والماب
+local ServerTab = Window:MakeTab({"السيرفر والماب", "globe"})
+ServerTab:AddSection({"التنقل والتتبع"})
+
+ServerTab:AddButton({
+    Name = "الانتقال لأقرب لاعب",
+    Callback = function()
+        local myChar = LocalPlayer.Character
+        if not (myChar and myChar:FindFirstChild("HumanoidRootPart")) then return end
+        
+        local myPos = myChar.HumanoidRootPart.Position
+        local closestPlayer = nil
+        local shortestDistance = math.huge
+
+        for _, plr in ipairs(Players:GetPlayers()) do
+            if plr ~= LocalPlayer and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") then
+                local dist = (plr.Character.HumanoidRootPart.Position - myPos).Magnitude
+                if dist < shortestDistance then
+                    shortestDistance = dist
+                    closestPlayer = plr
+                end
+            end
+        end
+
+        if closestPlayer then
+            myChar.HumanoidRootPart.CFrame = closestPlayer.Character.HumanoidRootPart.CFrame * CFrame.new(0, 2, 3)
+        end
+    end
+})
+
+-- [التاب 5]: توفير الطاقة ومبرد الهاتف
+local FeaturesTab = Window:MakeTab({"توفير الطاقة والحرارة", "star"})
+FeaturesTab:AddSection({"تبريد الجهاز وتوفير الطاقة"})
+
+FeaturesTab:AddButton({
+    Name = "مخفف اللاق (FPS Booster)",
+    Callback = function()
+        pcall(function()
+            Lighting.GlobalShadows = false
+            Lighting.FogEnd = 9e9
+            settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
+            for _, v in pairs(workspace:GetDescendants()) do
+                if v:IsA("BasePart") then
+                    v.Material = Enum.Material.Plastic
+                    v.Reflectance = 0
+                elseif v:IsA("Decal") or v:IsA("Texture") then
+                    v:Destroy()
+                elseif v:IsA("ParticleEmitter") or v:IsA("Smoke") or v:IsA("Fire") or v:IsA("Sparkles") then
+                    v.Enabled = false
+                end
+            end
+        end)
+    end
+})
+
+local coolerActive = false
+FeaturesTab:AddToggle({
+    Name = "مبرد الهاتف (تحديد 15 FPS وتخفيض المعالج)",
+    Default = false,
+    Callback = function(Value)
+        coolerActive = Value
+        if Value then
+            pcall(function()
+                if setfpscap then setfpscap(15) end
+                settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
+            end)
+        else
+            pcall(function()
+                if setfpscap then setfpscap(60) end
+                settings().Rendering.QualityLevel = Enum.QualityLevel.Automatic
+            end)
+        end
+    end
+})
+
+local BlackScreenGui
+local function DestroyBlackScreen()
+    if BlackScreenGui then
+        BlackScreenGui:Destroy()
+        BlackScreenGui = nil
+        pcall(function()
+            if setfpscap then setfpscap(60) end
+        end)
+    end
+end
+
+FeaturesTab:AddToggle({
+    Name = "وضع الشاشة السوداء (مع زر X للإلغاء)",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            if not BlackScreenGui then
+                BlackScreenGui = Instance.new("ScreenGui")
+                BlackScreenGui.Name = "SwadBlackScreenGui"
+                BlackScreenGui.ResetOnSpawn = false
+                
+                if gethui then
+                    BlackScreenGui.Parent = gethui()
+                else
+                    BlackScreenGui.Parent = CoreGui
+                end
+                
+                local Frame = Instance.new("Frame")
+                Frame.Size = UDim2.new(1, 0, 1, 0)
+                Frame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+                Frame.Parent = BlackScreenGui
+                
+                local TextLabel = Instance.new("TextLabel")
+                TextLabel.Text = "سواد Hub - وضع توفير الطاقة مفعل 🔋"
+                TextLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+                TextLabel.Size = UDim2.new(1, 0, 1, -50)
+                TextLabel.BackgroundTransparency = 1
+                TextLabel.Font = Enum.Font.GothamBold
+                TextLabel.TextSize = 22
+                TextLabel.Parent = Frame
+
+                -- زر الإغلاق الأحمر (X)
+                local CloseBtn = Instance.new("TextButton")
+                CloseBtn.Size = UDim2.new(0, 50, 0, 50)
+                CloseBtn.Position = UDim2.new(1, -60, 0, 10)
+                CloseBtn.BackgroundColor3 = Color3.fromRGB(200, 40, 40)
+                CloseBtn.Text = "X"
+                CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+                CloseBtn.TextSize = 24
+                CloseBtn.Font = Enum.Font.GothamBold
+                CloseBtn.Parent = Frame
+                
+                local Corner = Instance.new("UICorner")
+                Corner.CornerRadius = UDim.new(0, 12)
+                Corner.Parent = CloseBtn
+
+                CloseBtn.MouseButton1Click:Connect(function()
+                    DestroyBlackScreen()
+                end)
+            end
+            pcall(function()
+                if setfpscap then setfpscap(10) end
+            end)
+        else
+            DestroyBlackScreen()
+        end
+    end
+})
+
+-- [التاب 6]: السكربتات الخارجية
+local ExternalTab = Window:MakeTab({"تشغيل السكربتات", "code"})
+ExternalTab:AddSection({"سكربتات خارجية جاهزة للتشغيل"})
+
+-- 📌 زر سكربت أسد
+ExternalTab:AddButton({
+    Name = "سكربت أسد",
+    Callback = function()
+        local playerGui = LocalPlayer:WaitForChild("PlayerGui")
+
+        if playerGui:FindFirstChild("AsadAfkGui") then
+            playerGui.AsadAfkGui:Destroy()
+        end
+
+        local function boostFPS()
+            local lighting = game:GetService("Lighting")
+            local workspace = game:GetService("Workspace")
+            local terrain = workspace:FindFirstChildOfClass("Terrain")
+
+            pcall(function()
+                lighting.GlobalShadows = false
+                lighting.FogEnd = 9e9
+                lighting.Brightness = 2
+                for _, v in ipairs(lighting:GetChildren()) do
+                    if v:IsA("PostEffect") or v:IsA("BloomEffect") or v:IsA("BlurEffect") or v:IsA("ColorCorrectionEffect") or v:IsA("SunRaysEffect") then
+                        v.Enabled = false
+                    end
+                end
+            end)
+
+            pcall(function()
+                for _, v in ipairs(workspace:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        v.CastShadow = false
+                        v.Material = Enum.Material.SmoothPlastic
+                    elseif v:IsA("ParticleEmitter") or v:IsA("Trail") or v:IsA("Fire") or v:IsA("Smoke") or v:IsA("Sparkles") then
+                        v.Enabled = false
+                    end
+                end
+            end)
+
+            if terrain then
+                pcall(function()
+                    terrain.WaterWaveSize = 0
+                    terrain.WaterWaveSpeed = 0
+                end)
+            end
+        end
+
+        boostFPS()
+
+        task.spawn(function()
+            while true do
+                task.wait(300)
+                pcall(function()
+                    collectgarbage("collect")
+                    boostFPS()
+                end)
+            end
+        end)
+
+        local screenGui = Instance.new("ScreenGui")
+        screenGui.Name = "AsadAfkGui"
+        screenGui.ResetOnSpawn = false
+        screenGui.Parent = playerGui
+
+        local mainFrame = Instance.new("Frame")
+        mainFrame.Size = UDim2.new(0, 220, 0, 90)
+        mainFrame.Position = UDim2.new(0.5, -110, 0.1, 0)
+        mainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+        mainFrame.BorderColor3 = Color3.fromRGB(0, 255, 0)
+        mainFrame.BorderSizePixel = 3
+        mainFrame.Parent = screenGui
+
+        local titleLabel = Instance.new("TextLabel")
+        titleLabel.Size = UDim2.new(1, 0, 0, 30)
+        titleLabel.Position = UDim2.new(0, 0, 0, 10)
+        titleLabel.BackgroundTransparency = 1
+        titleLabel.Text = "ASAD AFK - STABLE"
+        titleLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+        titleLabel.TextSize = 14
+        titleLabel.Font = Enum.Font.SourceSansBold
+        titleLabel.Parent = mainFrame
+
+        local timerLabel = Instance.new("TextLabel")
+        timerLabel.Size = UDim2.new(1, 0, 0, 40)
+        timerLabel.Position = UDim2.new(0, 0, 0, 40)
+        timerLabel.BackgroundTransparency = 1
+        timerLabel.Text = "00:00:00"
+        timerLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+        timerLabel.TextSize = 20
+        timerLabel.Font = Enum.Font.Code
+        timerLabel.Parent = mainFrame
+
+        task.spawn(function()
+            local startTime = tick()
+            while screenGui.Parent do
+                local currentTime = tick()
+                local elapsedTime = math.floor(currentTime - startTime)
+                
+                local hours = math.floor(elapsedTime / 3600)
+                local minutes = math.floor((elapsedTime % 3600) / 60)
+                local seconds = elapsedTime % 60
+                
+                timerLabel.Text = string.format("%02d:%02d:%02d", hours, minutes, seconds)
+                task.wait(1)
+            end
+        end)
+
+        local camera = workspace.CurrentCamera
+        task.spawn(function()
+            while task.wait(120) do
+                pcall(function()
+                    camera.CFrame = camera.CFrame * CFrame.Angles(0, math.rad(1), 0)
+                    task.wait(0.1)
+                    camera.CFrame = camera.CFrame * CFrame.Angles(0, math.rad(-1), 0)
+                end)
+            end
+        end)
+
+        local UserInputService = game:GetService("UserInputService")
+        local dragging
+        local dragInput
+        local dragStart
+        local startPos
+
+        local function update(input)
+            local delta = input.Position - dragStart
+            mainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        end
+
+        mainFrame.InputBegan:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                dragging = true
+                dragStart = input.Position
+                startPos = mainFrame.Position
+                
+                input.Changed:Connect(function()
+                    if input.UserInputState == Enum.UserInputState.End then
+                        dragging = false
+                    end
+                end)
+            end
+        end)
+
+        mainFrame.InputChanged:Connect(function(input)
+            if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+                dragInput = input
+            end
+        end)
+
+        UserInputService.InputChanged:Connect(function(input)
+            if input == dragInput and dragging then
+                update(input)
+            end
+        end)
+    end
+})
+
+-- 📌 زر سكربت حل مشاكل سواد
+ExternalTab:AddButton({
+    Name = "حل مشاكل سواد",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/tatajkjk24-glitch/Yfogfuryt/refs/heads/main/%D8%AD%D9%84%D9%88%D9%84%20%D9%85%D8%B4%D8%A7%D9%83%D9%84%20%D8%B3%D9%88%D8%A7%D8%AF"))()
+    end
+})
+
+-- 📌 زر Universal Anti-AFK
+ExternalTab:AddButton({
+    Name = "تشغيل Anti-AFK v Anti-Kick V3",
+    Callback = function()
+        loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-AntiAFK-v-AntiKick-V3-v-Kick-Attempt-Logger-27977"))()
+    end
+})
+
+ExternalTab:AddButton({
+    Name = "تشغيل سكربت Infinite Yield (Admin)",
+    Callback = function()
+        loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+    end
+})
+
+-- [التاب 7]: أدوات AFK
+local AfkTab = Window:MakeTab({"أدوات AFK المتقدمة", "clock"})
+AfkTab:AddSection({"حماية AFK وإبقاء الاتصال"})
+
+local antiAfkConnection
+AfkTab:AddToggle({
+    Name = "تفعيل Anti-AFK المدمج",
+    Default = true,
+    Callback = function(Value)
+        if Value then
+            if not antiAfkConnection then
+                antiAfkConnection = LocalPlayer.Idled:Connect(function()
+                    VirtualUser:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+                    task.wait(1)
+                    VirtualUser:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+                end)
+            end
+        else
+            if antiAfkConnection then
+                antiAfkConnection:Disconnect()
+                antiAfkConnection = nil
+            end
+        end
+    end
+})
+
+local autoJumpActive = false
+local autoJumpThread
+AfkTab:AddToggle({
+    Name = "قفز تلقائي متقطع (Auto-Jump AFK)",
+    Default = false,
+    Callback = function(Value)
+        autoJumpActive = Value
+        if Value then
+            if not autoJumpThread then
+                autoJumpThread = task.spawn(function()
+                    while autoJumpActive do
+                        if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
+                            LocalPlayer.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+                        end
+                        task.wait(60)
+                    end
+                    autoJumpThread = nil
+                end)
+            end
+        else
+            if autoJumpThread then
+                task.cancel(autoJumpThread)
+                autoJumpThread = nil
+            end
+        end
+    end
+})
+
+local autoClickerActive = false
+local autoClickerThread
+AfkTab:AddToggle({
+    Name = "أوتو كليكر (نقرة كل دقيقتين)",
+    Default = false,
+    Callback = function(Va
